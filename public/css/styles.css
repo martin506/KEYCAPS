@@ -13,6 +13,14 @@ h1{
   font-family: 'Sacramento', cursive;
 }
 
+h3{
+  font-size: 60px;
+  color: white;
+  text-align: center;
+  padding: 50px;
+  font-family: 'Zilla Slab', serif;
+}
+
 p{
   font-family: 'Ubuntu', sans-serif;
   color: white;
@@ -22,6 +30,7 @@ a:hover{
   text-decoration: none;
   color: black;
 }
+
 /* navigation */
 
 .navigation{
@@ -83,4 +92,14 @@ a:hover{
 
 .footerContent{
   text-align: center;
+  margin-top: 200px;
+}
+
+/* contact us */
+
+label{
+  font-size: 40px;
+  color: white;
+  text-align: center;
+  font-family: 'Zilla Slab', serif;
 }
