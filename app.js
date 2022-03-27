@@ -57,7 +57,7 @@ passport.use(new GoogleStrategy({
     userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
   },
   function(accessToken, refreshToken, profile, cb) {
-    console.log(profile);
+    //console.log(profile);
 
     User.findOrCreate({ googleId: profile.id }, function (err, user) {
       return cb(err, user);
@@ -66,6 +66,9 @@ passport.use(new GoogleStrategy({
 ));
 
 // get requests
+
+
+
 app.get("/", function(req, res){
   res.render("home");
 })
@@ -105,9 +108,50 @@ app.get("/contacts", function(req, res){
 
 // post requests
 
+
+
+
 app.post("/message", function(req, res){
 
+  var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+  if (req.body.userMessageTitle!== "" && req.body.userMessageContent!== "" && req.body.userEmail!== "" && re.test(req.body.userEmail) ){
+
+    const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.MY_EMAIL,
+      pass: process.env.MY_EMAIL_PASSWORD
+    }
+    });
+
+    const mailOptions = {
+      from: req.body.userEmail,
+      to: "martynas.simanavicius1@gmail.com",
+      subject: req.body.userEmail + " sent you " + req.body.userMessageTitle,
+      text: req.body.userMessageContent
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+    	console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
+
+    res.redirect("/");
+
+  } else {
+    res.redirect("/contacts");
+  }
 })
+
+app.post('/logout', function(req, res){
+  req.logout();
+  res.redirect('/');
+});
 
 
 
